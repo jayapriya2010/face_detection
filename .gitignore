@@ -1,0 +1,16 @@
+# Known faces directory
+known_faces/*
+!known_faces/.gitkeep
+
+# Output images
+output.jpg
+*.jpg
+*.jpeg
+*.png
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+venv/
