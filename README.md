@@ -2,7 +2,13 @@
 
 1. Install required packages in your Conda environment:
 ```bash
-conda install -c conda-forge insightface opencv numpy
+# Remove any existing opencv installations
+conda remove opencv-python opencv --yes
+conda clean --all --yes
+
+# Install packages
+conda install -c conda-forge opencv --yes
+conda install -c conda-forge insightface numpy --yes
 ```
 
 2. Create directory structure:
@@ -20,13 +26,12 @@ mkdir known_faces
 python detect_faces.py
 ```
 
-Note: Before running, replace "your_image.jpg" in the script with the path to the image you want to analyze.
-5. Run the script:
-```bash
-python detect_faces.py
-```
-
-Note: Before running, replace "your_image.jpg" in the script with the path to the image you want to analyze.
+## Usage
+- The webcam will automatically open and start detecting faces
+- Known faces will be labeled with their names
+- Unknown faces will be labeled as "Unknown"
+- Green boxes will appear around detected faces
+- Press 'q' to quit the application
 
 ## Git Setup
 
@@ -45,4 +50,5 @@ git remote add origin <your-repository-url>
 git push -u origin main
 ```
 
+Note: Make sure to create the `known_faces` directory locally and add your reference photos before running the script.
 Note: Make sure to create the `known_faces` directory locally and add your reference photos before running the script.
