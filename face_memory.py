@@ -127,3 +127,9 @@ class FaceMemory:
     
     def get_dwell_time(self, face_id):
         return self.face_times.get(face_id, 0)
+    
+    def reset_all_times(self):
+        """Reset all dwell times and last seen timestamps"""
+        self.face_times = {}
+        self.last_seen = {}
+        return "All dwell times reset"
