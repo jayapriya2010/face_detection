@@ -1,6 +1,6 @@
 insightface
-opencv-python>=4.8.0
+opencv-python
 numpy
-onnxruntime>=1.10.0  # Required for insightface
-faiss-cpu>=1.7.0  # Use faiss-gpu for CUDA support
+faiss-cpu
+onnxruntime
 pickle-mixin>=1.0.2
