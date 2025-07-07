@@ -6,6 +6,13 @@ from insightface.app import FaceAnalysis
 from face_memory import FaceMemory
 import os
 
+def get_video_source():
+    video_path = input("Enter video file path (or press Enter for webcam): ").strip()
+    if video_path and os.path.exists(video_path):
+        return cv2.VideoCapture(video_path)
+    print("Using webcam (no valid video file provided)")
+    return cv2.VideoCapture(0)
+
 # Initialize face analysis for CPU only
 app = FaceAnalysis(providers=['CPUExecutionProvider'])
 app.prepare(ctx_id=0, det_size=(320, 320))
@@ -20,11 +27,11 @@ def select_roi(frame):
     cv2.destroyWindow("Select ROI")
     return roi
 
-# Initialize webcam
-cap = cv2.VideoCapture(0)
+# Initialize video source
+cap = get_video_source()
 ret, first_frame = cap.read()
 if not ret:
-    print("Error: Could not read from webcam")
+    print("Error: Could not read from video source")
     sys.exit(1)
 
 # Let user select ROI
@@ -32,9 +39,14 @@ roi = select_roi(first_frame)
 roi_x, roi_y, roi_w, roi_h = roi
 
 try:
+    # Get video properties
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_delay = int(1000/fps) if fps > 0 else 30  # milliseconds between frames
+
     while True:
         ret, frame = cap.read()
         if not ret:
+            print("End of video")
             break
 
         # Draw ROI
@@ -73,13 +85,11 @@ try:
 
         cv2.imshow('Face Recognition with ROI', frame)
         
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        # Use frame_delay for video playback speed
+        if cv2.waitKey(frame_delay) & 0xFF == ord('q'):
             break
 
 finally:
     # Clean up
     cap.release()
-    cv2.destroyAllWindows()
-    cv2.destroyAllWindows()
-    cv2.destroyAllWindows()
     cv2.destroyAllWindows()
